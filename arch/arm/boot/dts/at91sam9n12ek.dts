@@ -121,6 +121,16 @@
 				};
 			};
 
+			spi1: spi@f0004000 {
+				status = "okay";
+				cs-gpios = <&pioA 1 0>, <0>, <0>, <0>;
+				sprout_talk@0 {
+					compatible = "sprout_talk";
+					spi-max-frequency = <1000000>;
+					reg = <0>;
+				};
+			};
+
 			watchdog@fffffe40 {
 				status = "okay";
 			};
