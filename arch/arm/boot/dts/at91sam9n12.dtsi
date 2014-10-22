@@ -686,4 +686,17 @@
 		#size-cells = <0>;
 		status = "disabled";
 	};
+
+	i2c@1 {
+		compatible = "i2c-gpio";
+		gpios = <&pioC 0 GPIO_ACTIVE_HIGH /* sda */
+			 &pioC 1 GPIO_ACTIVE_HIGH /* scl */
+			>;
+		i2c-gpio,sda-open-drain;
+		i2c-gpio,scl-open-drain;
+		i2c-gpio,delay-us = <2>;	/* ~100 kHz */
+		#address-cells = <1>;
+		#size-cells = <0>;
+		status = "disabled";
+	};
 };

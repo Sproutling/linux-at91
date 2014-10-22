@@ -43,21 +43,11 @@
 			};
 
 			i2c0: i2c@f8010000 {
-				status = "okay";
+				status = "disabled";
+			};
 
-				wm8904: codec@1a {
-					compatible = "wm8904";
-					reg = <0x1a>;
-				};
-
-				qt1070: keyboard@1b {
-					compatible = "qt1070";
-					reg = <0x1b>;
-					interrupt-parent = <&pioA>;
-					interrupts = <2 IRQ_TYPE_EDGE_FALLING>;
-					pinctrl-names = "default";
-					pinctrl-0 = <&pinctrl_qt1070_irq>;
-				};
+			i2c1: i2c@f8014000 {
+				status = "disabled";
 			};
 
 			mmc0: mmc@f0008000 {
@@ -150,6 +140,18 @@
 			num-ports = <1>;
 			atmel,vbus-gpio = <&pioB 7 GPIO_ACTIVE_LOW>;
 			status = "okay";
+		};
+	};
+
+	i2c@0 {
+		status = "okay";
+	};
+
+	i2c@1 {
+		status = "okay";
+		sprout_led@5a {
+			compatible = "sprout_led";
+			reg = <0x5a>;
 		};
 	};
 
