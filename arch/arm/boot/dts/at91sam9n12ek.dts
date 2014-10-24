@@ -14,7 +14,7 @@
 	compatible = "atmel,at91sam9n12ek", "atmel,at91sam9n12", "atmel,at91sam9";
 
 	chosen {
-		bootargs = "console=ttyS0,115200 root=/dev/mtdblock1 rw rootfstype=jffs2";
+		bootargs = "console=ttyS0,115200 i2c_bus=1,100 root=/dev/mtdblock1 rw rootfstype=jffs2";
 	};
 
 	memory {
@@ -43,11 +43,11 @@
 			};
 
 			i2c0: i2c@f8010000 {
-				status = "disabled";
+				status = "okay";
 			};
 
 			i2c1: i2c@f8014000 {
-				status = "disabled";
+				status = "okay";
 			};
 
 			mmc0: mmc@f0008000 {
@@ -59,7 +59,7 @@
 				slot@0 {
 					reg = <0>;
 					bus-width = <4>;
-					cd-gpios = <&pioA 7 GPIO_ACTIVE_HIGH>;
+					cd-gpios = <0>;
 				};
 			};
 
@@ -144,15 +144,11 @@
 	};
 
 	i2c@0 {
-		status = "okay";
+		status = "disabled";
 	};
 
 	i2c@1 {
-		status = "okay";
-		sprout_led@5a {
-			compatible = "sprout_led";
-			reg = <0x5a>;
-		};
+		status = "disabled";
 	};
 
 	leds {

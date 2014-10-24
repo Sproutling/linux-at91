@@ -329,6 +329,22 @@
 					};
 				};
 
+				i2c0 {
+					pinctrl_i2c0: i2c0-0 {
+						atmel,pins =
+							<AT91_PIOA 30 AT91_PERIPH_A AT91_PINCTRL_NONE	/* PA30 periph A I2C0 data */
+							 AT91_PIOA 31 AT91_PERIPH_A AT91_PINCTRL_NONE>;	/* PA31 periph A I2C0 clock */
+					};
+				};
+
+				i2c1 {
+					pinctrl_i2c1: i2c1-0 {
+						atmel,pins =
+							<AT91_PIOC 0 AT91_PERIPH_C AT91_PINCTRL_NONE	/* PC0 periph C I2C1 data */
+							 AT91_PIOC 1 AT91_PERIPH_C AT91_PINCTRL_NONE>;	/* PC1 periph C I2C1 clock */
+					};
+				};
+
 				spi0 {
 					pinctrl_spi0: spi0-0 {
 						atmel,pins =
@@ -344,22 +360,6 @@
 							<AT91_PIOA 21 AT91_PERIPH_B AT91_PINCTRL_NONE	/* PA21 periph B SPI1_MISO pin */
 							 AT91_PIOA 22 AT91_PERIPH_B AT91_PINCTRL_NONE	/* PA22 periph B SPI1_MOSI pin */
 							 AT91_PIOA 23 AT91_PERIPH_B AT91_PINCTRL_NONE>;	/* PA23 periph B SPI1_SPCK pin */
-					};
-				};
-
-				i2c0 {
-					pinctrl_i2c0: i2c0-0 {
-						atmel,pins =
-							<AT91_PIOA 30 AT91_PERIPH_A AT91_PINCTRL_NONE
-							 AT91_PIOA 31 AT91_PERIPH_A AT91_PINCTRL_NONE>;
-					};
-				};
-
-				i2c1 {
-					pinctrl_i2c1: i2c1-0 {
-						atmel,pins =
-							<AT91_PIOC 0 AT91_PERIPH_C AT91_PINCTRL_NONE
-							 AT91_PIOC 1 AT91_PERIPH_C AT91_PINCTRL_NONE>;
 					};
 				};
 
@@ -681,7 +681,7 @@
 			>;
 		i2c-gpio,sda-open-drain;
 		i2c-gpio,scl-open-drain;
-		i2c-gpio,delay-us = <2>;	/* ~100 kHz */
+		i2c-gpio,delay-us = <5>;	/* ~100 kHz */
 		#address-cells = <1>;
 		#size-cells = <0>;
 		status = "disabled";
@@ -693,8 +693,8 @@
 			 &pioC 1 GPIO_ACTIVE_HIGH /* scl */
 			>;
 		i2c-gpio,sda-open-drain;
-		i2c-gpio,scl-open-drain;
-		i2c-gpio,delay-us = <2>;	/* ~100 kHz */
+		i2c-gpio,scl-output-only;
+		i2c-gpio,delay-us = <5>;	/* ~100 kHz */
 		#address-cells = <1>;
 		#size-cells = <0>;
 		status = "disabled";
