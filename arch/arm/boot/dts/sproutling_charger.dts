@@ -40,10 +40,17 @@
 
 			i2c0: i2c@f8010000 {
 				status = "okay";
+				tlv320aic3107: tlv320aic3x@18 {
+					compatible = "ti,tlv320aic3107";
+					reg = <0x18>;
+					gpio-reset = <&pioA 23 GPIO_ACTIVE_HIGH>;
+					ai3x-micbias-vg = <2>;
+				};
 			};
 
 			i2c1: i2c@f8014000 {
 				status = "okay";
+				dma-names = "";	/* Disable DMA for I2C1 so that the audio chip can use it instead */
 				si70xx@40 {
 					compatible = "si70xx";
 					reg = <0x40>;
@@ -64,6 +71,13 @@
 			};
 
 			pinctrl@fffff400 {
+				board {
+					pinctrl_pck0_as_mck: pck0_as_mck {
+						atmel,pins =
+							<AT91_PIOB 10 AT91_PERIPH_B AT91_PINCTRL_NONE>;	/* PB10 periph B */
+					};
+				};
+
 				mmc0 {
 					pinctrl_board_mmc0: mmc0-board {
 						atmel,pins =
@@ -72,8 +86,12 @@
 				};
 			};
 
-			spi0: spi@f0000000 {
+			ssc0: ssc@f0010000 {
 				status = "okay";
+			};
+
+			spi0: spi@f0000000 {
+				status = "disabled";
 				cs-gpios = <&pioA 14 0>, <0>, <0>, <0>;
 				m25p80@0 {
 					compatible = "atmel,at25df321a";
@@ -162,4 +180,21 @@
 			gpio-key,wakeup;
 		};
 	};
+
+	sound {
+		compatible = "atmel,asoc-tlv320aic3107";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_pck0_as_mck>;
+
+		atmel,model = "tlv320aic3x";
+		atmel,ssc-controller = <&ssc0>;
+		atmel,audio-codec = <&tlv320aic3107>;
+
+		atmel,audio-routing =
+			"Left Class-D Out", "SPOP",
+			"Left Class-D Out", "SPOM",
+			"Left Class-D Out", "Front Left",
+			"LINE1L", "Left Capture";
+	};
 };
+
