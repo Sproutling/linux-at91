@@ -672,6 +672,15 @@
 			interrupts = <22 IRQ_TYPE_LEVEL_HIGH 2>;
 			status = "disabled";
 		};
+
+		udc0: gadget@f803c000 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			compatible = "atmel,at91rm9200-udc";
+			reg = <0xf803c000 0x4000>;
+			interrupts = <23 IRQ_TYPE_LEVEL_HIGH 2>;
+			status = "disabled";
+		};
 	};
 
 	i2c@0 {

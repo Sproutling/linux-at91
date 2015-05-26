@@ -230,7 +230,7 @@ static void pmc_uckr_mode(struct clk *clk, int is_on)
 }
 
 /* USB function clocks (PLLB must be 48 MHz) */
-static struct clk udpck = {
+struct clk udpck = {
 	.name		= "udpck",
 	.parent		= &pllb,
 	.mode		= pmc_sys_mode,
