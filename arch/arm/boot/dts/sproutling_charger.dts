@@ -91,16 +91,6 @@
 			};
 
 			spi0: spi@f0000000 {
-				status = "disabled";
-				cs-gpios = <&pioA 14 0>, <0>, <0>, <0>;
-				m25p80@0 {
-					compatible = "atmel,at25df321a";
-					spi-max-frequency = <50000000>;
-					reg = <0>;
-				};
-			};
-
-			spi1: spi@f0004000 {
 				status = "okay";
 				cs-gpios = <&pioA 1 0>, <0>, <0>, <0>;
 				sprout_talk@0 {
@@ -108,6 +98,10 @@
 					spi-max-frequency = <1000000>;
 					reg = <0>;
 				};
+			};
+
+		    spi1: spi@f0004000 {
+				status = "disabled";
 			};
 
 			watchdog@fffffe40 {
