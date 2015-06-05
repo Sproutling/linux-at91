@@ -31,6 +31,8 @@
 #include <linux/bitops.h>
 #include <linux/uaccess.h>
 #include <linux/of.h>
+#include <linux/reboot.h>	/* For kernel_power_off() */
+#include <linux/pid_namespace.h>
 #include <asm/firmware.h>
 
 #include "at91sam9_wdt.h"
@@ -93,17 +95,34 @@ static inline void at91_wdt_reset(void)
 		wdt_write(AT91_WDT_CR, AT91_WDT_KEY | AT91_WDT_WDRSTT);
 }
 
+static DEFINE_MUTEX(reboot_mutex);
 /*
  * Timer tick
  */
 static void at91_ping(unsigned long data)
 {
+	struct pid_namespace *pid_ns = task_active_pid_ns(current);	
+
 	if (time_before(jiffies, at91wdt_private.next_heartbeat) ||
 	    (!watchdog_active(&at91_wdt_dev))) {
 		at91_wdt_reset();
 		mod_timer(&at91wdt_private.timer, jiffies + WDT_TIMEOUT);
-	} else
+	} else {
+	
 		pr_crit("I will reset your machine !\n");
+	
+		/* Sproutling, hack for reboot workaround - power off the system */	
+		/*
+	         * If pid namespaces are enabled and the current task is in a ch		 ild pid_namespace, the command is handled by reboot_pid_ns() wh		 ich will call do_exit().
+        	 */
+
+        	reboot_pid_ns(pid_ns, LINUX_REBOOT_CMD_POWER_OFF);
+
+		mutex_lock(&reboot_mutex);
+		kernel_power_off();
+		do_exit(0);
+		mutex_unlock(&reboot_mutex);
+	}
 }
 
 static int at91_wdt_ping(struct watchdog_device *wdd)

@@ -240,7 +240,8 @@ void machine_restart(char *cmd)
 {
 	smp_send_stop();
 
-	arm_pm_restart(reboot_mode, cmd);
+	/* Sproutling, hack for reboot workaround - power off the system */
+	kernel_power_off();
 
 	/* Give a grace period for failure to restart of 1s */
 	mdelay(1000);
