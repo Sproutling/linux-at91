@@ -1,0 +1,13 @@
+# Introduction
+
+This is a specific sproutling linux build instruction
+
+# USB gadget
+
+To make Linux kernel automatically load usb gadget module, need to change the following configuration items in .config file from:
+CONFIG_USB_LIBCOMPOSITE=m
+CONFIG_USB_ETH=m
+to:
+CONFIG_USB_LIBCOMPOSITE=y
+CONFIG_USB_ETH=y
+
