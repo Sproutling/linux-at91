@@ -145,7 +145,8 @@ void panic(const char *fmt, ...)
 		 * shutting down.  But if there is a chance of
 		 * rebooting the system it will be rebooted.
 		 */
-		emergency_restart();
+		/* Sproutling hacking for reboot issue */
+		kernel_power_off();
 	}
 #ifdef __sparc__
 	{
