@@ -76,6 +76,10 @@
 						atmel,pins =
 							<AT91_PIOB 10 AT91_PERIPH_B AT91_PINCTRL_NONE>;	/* PB10 periph B */
 					};
+					pinctrl_btle_irq: btle_irq {
+						atmel,pins =
+							<AT91_PIOC 10 AT91_PERIPH_GPIO AT91_PINCTRL_PULL_DOWN>;	/* PC10 - BTLE IRQ line with pulldown */
+					};
 				};
 
 				mmc0 {
@@ -93,9 +97,9 @@
 			spi0: spi@f0000000 {
 				status = "okay";
 				cs-gpios = <&pioA 1 0>, <0>, <0>, <0>;
-				sprout_talk@0 {
-					compatible = "sprout_talk";
-					spi-max-frequency = <1000000>;
+				spidev@0 {
+					compatible = "spidev";
+					spi-max-frequency = <1000000>;	// 1 MHz
 					reg = <0>;
 				};
 			};
