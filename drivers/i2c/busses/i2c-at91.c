@@ -793,6 +793,7 @@ static int at91_twi_probe(struct platform_device *pdev)
 	dev->adapter.dev.parent = dev->dev;
 	dev->adapter.nr = pdev->id;
 	dev->adapter.timeout = AT91_I2C_TIMEOUT;
+	dev->adapter.retries = 3;
 	dev->adapter.dev.of_node = pdev->dev.of_node;
 
 	rc = i2c_add_numbered_adapter(&dev->adapter);

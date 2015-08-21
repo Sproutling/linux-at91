@@ -1495,10 +1495,11 @@ int __i2c_transfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
 	orig_jiffies = jiffies;
 	for (ret = 0, try = 0; try <= adap->retries; try++) {
 		ret = adap->algo->master_xfer(adap, msgs, num);
-		if (ret != -EAGAIN)
+		if (ret != -EAGAIN && ret != -EREMOTEIO) 
 			break;
 		if (time_after(jiffies, orig_jiffies + adap->timeout))
 			break;
+		udelay(500);
 	}
 
 	return ret;
